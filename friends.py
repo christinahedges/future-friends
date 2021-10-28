@@ -2,6 +2,8 @@ import numpy as np
 import altair as alt
 import pandas as pd
 
+alt.themes.enable('latimes')
+
 bad = np.hstack([['losers, probably']*10, 'dweebs', 'fools', 'goobers', 'goofballs', 'dorks', 'nerds', 'bumpkins'])
 good = np.hstack([['cool']*10, 'l33t', 'awesome', 'deserves a raise', 'chill', 'spiffy'])
 
@@ -20,16 +22,16 @@ def make_plot(n=100, err=0.3):
     
     chart = alt.Chart(source).mark_circle(size=40).encode(
         x=alt.X('x', scale=alt.Scale(type='log'), axis=alt.Axis(title='How much Fortnite you play')),
-        y=alt.Y('y', scale=alt.Scale(type='log'), axis=alt.Axis(title='How Cool My Friends Think\nYou Are [Apparent Magnitude]')),
+        y=alt.Y('y', scale=alt.Scale(type='log'), axis=alt.Axis(title='How Cool My Friends Think You Are')),
         color=alt.Color('coolness', scale=alt.
                         Scale(domain=dom, range=rng))
     ).properties(
-        title='Objective Predictor of Coolness, should be used to determine all future friends.'
+        title='Fortnite Playing Objectively Predicts Coolness, should be used to determine all future friends.'
     )
 
     point = alt.Chart(source[int(n-n/5)+1:int(n-n/5)+1 + 1]).mark_point(size=100).encode(
-        x=alt.X('x', axis=alt.Axis(title='How much Fortnite you play')),
-        y=alt.Y('y', axis=alt.Axis(title='How Cool My Friends Think\nYou Are [Apparent Magnitude]')),
+        x=alt.X('x'),
+        y=alt.Y('y'),
         color=alt.Color('coolness', legend=alt.Legend(title="Coolness"), scale=alt.Scale(scheme='set1'))
     )
     text = (
@@ -39,7 +41,4 @@ def make_plot(n=100, err=0.3):
     )
 
     return (chart + point + text).interactive()
-
-plot = make_plot(int(np.random.normal(100, 50)), err=np.random.uniform(0.3, 0.8))
-plot.save("objective.json")
-plot.interactive()
+make_plot(int(np.max([np.random.normal(100, 50), 20])), err=np.random.uniform(0.3, 0.8))
