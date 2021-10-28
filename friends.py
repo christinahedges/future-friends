@@ -19,7 +19,7 @@ chart = alt.Chart(source).mark_circle(size=40).encode(
     color=alt.Color('coolness', scale=alt.
                     Scale(domain=dom, range=rng))
 ).properties(
-    title='Fortnite Playing Objectively Predicts Coolness, should be used to determine all future friends.'
+    title='Objective Predictor of Coolness, should be used to determine all future friends.'
 )
 
 point = alt.Chart(source[int(n-n/5):int(n-n/5) + 1]).mark_point(size=100).encode(
@@ -33,4 +33,4 @@ text = (
         .encode(x=alt.X("x"), y=alt.Y("y"), text=alt.Text("who"))
     )
 
-chart + point + text).interactive()
+(chart + point + text).save("objective.json")

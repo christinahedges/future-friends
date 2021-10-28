@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Objective Predictor of Coolness</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <style>
+      html,
+      body {
+        width: 100%;
+      }
+      #view {
+        width: 100%;
+        text-align: center;
+        margin: 50px 0;
+      }
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="view"></div>
+
+    <footer class="footer">
+      <div class="container">
+        <span class="text-muted"
+          >This is an
+          <a href="https://github.com/christinahedges/future-friends"
+            >open source</a
+          >
+          website by Christina and Dan.</span
+        >
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      var what = urlParams.has("what")
+        ? urlParams.get("what")
+        : "How much Fortnite you play";
+
+      fetch("objective.json")
+        .then((res) => res.json())
+        .then((spec) => {
+          spec.layer.forEach((layer) => {
+            if (layer.encoding.x.axis) layer.encoding.x.axis.title = what;
+          });
+          var opt = { renderer: "canvas", actions: false };
+          vegaEmbed("#view", spec, opt);
+        })
+        .catch((err) => console.error(err));
+    </script>
+  </body>
+</html>
