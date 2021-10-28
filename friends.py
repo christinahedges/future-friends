@@ -33,4 +33,4 @@ text = (
         .encode(x=alt.X("x"), y=alt.Y("y"), text=alt.Text("who"))
     )
 
-chart + point + text).interactive()
+(chart + point + text).interactive()
